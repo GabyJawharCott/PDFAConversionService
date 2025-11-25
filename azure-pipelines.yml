@@ -1,0 +1,82 @@
+# Azure DevOps Pipeline for PDFA Conversion Service
+trigger:
+  branches:
+    include:
+    - main
+    - develop
+    - release/*
+  paths:
+    exclude:
+    - README.md
+    - '*.md'
+    - deployment-scripts/*
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+  solution: '**/*.slnx'
+  projectPath: 'PDFAConversionService/PDFAConversionService.csproj'
+  testProjectPath: 'PDFAConversionService.Tests/PDFAConversionService.Tests.csproj'
+
+stages:
+- stage: Build
+  displayName: 'Build and Test'
+  jobs:
+  - job: Build
+    displayName: 'Build Application'
+    steps:
+    - task: UseDotNet@2
+      displayName: 'Use .NET 10.0 SDK'
+      inputs:
+        packageType: 'sdk'
+        version: '10.0.x'
+        installationPath: $(Agent.ToolsDirectory)/dotnet
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore NuGet packages'
+      inputs:
+        command: 'restore'
+        projects: '$(solution)'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Build solution'
+      inputs:
+        command: 'build'
+        projects: '$(solution)'
+        arguments: '--configuration $(buildConfiguration) --no-restore'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Run unit tests'
+      inputs:
+        command: 'test'
+        projects: '$(testProjectPath)'
+        arguments: '--configuration $(buildConfiguration) --no-build --verbosity normal'
+        publishTestResults: true
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish application'
+      inputs:
+        command: 'publish'
+        projects: '$(projectPath)'
+        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/publish --no-build'
+        zipAfterPublish: false
+
+    - task: CopyFiles@2
+      displayName: 'Copy configuration files'
+      inputs:
+        SourceFolder: 'PDFAConversionService'
+        Contents: |
+          appsettings.json
+          appsettings.Development.json
+          appsettings.Production.json
+        TargetFolder: '$(Build.ArtifactStagingDirectory)/publish'
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish build artifacts'
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/publish'
+        ArtifactName: 'PDFAConversionService'
+        publishLocation: 'Container'
+

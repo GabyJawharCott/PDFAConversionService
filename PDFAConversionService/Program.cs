@@ -53,7 +53,9 @@ builder.Services.AddOptions<GhostscriptOptions>()
     {
         o.ExecutablePath = cfg.GhostscriptPath;
         o.BaseParameters = cfg.BaseParameters;
-        o.TempDirectory = Path.Combine(Path.GetTempPath(), "PdfaConversion");
+        // Use configured temp directory or fallback to system temp
+        o.TempDirectory = builder.Configuration["Ghostscript:TempDirectory"] 
+            ?? Path.Combine(Path.GetTempPath(), "PdfaConversion");
         o.TimeoutInSeconds = cfg.TimeoutInSeconds;
     })
     .Validate(o => File.Exists(o.ExecutablePath!), "Ghostscript executable not found.")

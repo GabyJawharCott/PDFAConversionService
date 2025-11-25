@@ -5,6 +5,13 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>dotnet-PDFAConversionService-0fb4ed50-f146-4646-8c6c-f04983d647f5</UserSecretsId>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Company>Your Company</Company>
+    <Product>PDFA Conversion Service</Product>
+    <Description>Converts PDF files to PDF/A-1b format using Ghostscript</Description>
+    <Copyright>Copyright © 2024</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

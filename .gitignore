@@ -361,3 +361,24 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Deployment artifacts
+*.zip
+*.7z
+deployment-packages/
+publish/
+
+# Environment-specific config (keep templates, ignore local overrides)
+appsettings.*.json
+!appsettings.json
+!appsettings.Development.json
+!appsettings.Production.json
+appsettings.Local.json
+appsettings.Override.json
+
+# Secrets and sensitive files
+*.secrets.json
+*.pfx
+*.key
+*.pem
+secrets/
