@@ -67,6 +67,12 @@ if ($existingService) {
     sc.exe config $ServiceName DisplayName= $DisplayName
     sc.exe description $ServiceName $Description
     
+    # Configure failure recovery: auto-restart on failure
+    Write-Host "Configuring automatic restart on failure..." -ForegroundColor Cyan
+    # Reset failure count after 1 day (86400 seconds)
+    # Actions: restart after 60 seconds on first failure, restart after 60 seconds on second failure, restart after 60 seconds on subsequent failures
+    sc.exe failure $ServiceName reset= 86400 actions= restart/60000/restart/60000/restart/60000
+    
     Write-Host "Service updated successfully." -ForegroundColor Green
 } else {
     # Create new service
@@ -82,6 +88,12 @@ if ($existingService) {
     sc.exe config $ServiceName DisplayName= $DisplayName
     sc.exe description $ServiceName $Description
     
+    # Configure failure recovery: auto-restart on failure
+    Write-Host "Configuring automatic restart on failure..." -ForegroundColor Cyan
+    # Reset failure count after 1 day (86400 seconds)
+    # Actions: restart after 60 seconds on first failure, restart after 60 seconds on second failure, restart after 60 seconds on subsequent failures
+    sc.exe failure $ServiceName reset= 86400 actions= restart/60000/restart/60000/restart/60000
+    
     Write-Host "Service created successfully." -ForegroundColor Green
 }
 
@@ -94,7 +106,11 @@ $service = Get-Service -Name $ServiceName
 if ($service.Status -eq 'Running') {
     Write-Host "Service started successfully!" -ForegroundColor Green
     Write-Host "`nService Status: $($service.Status)" -ForegroundColor Green
-    Write-Host "Service can be managed using:" -ForegroundColor Cyan
+    Write-Host "Start Type: $($service.StartType)" -ForegroundColor Green
+    Write-Host "`nService Configuration:" -ForegroundColor Cyan
+    Write-Host "  - Automatic startup: Enabled (starts with Windows)" -ForegroundColor Gray
+    Write-Host "  - Auto-restart on failure: Enabled (restarts after 60 seconds)" -ForegroundColor Gray
+    Write-Host "`nService can be managed using:" -ForegroundColor Cyan
     Write-Host "  Get-Service $ServiceName" -ForegroundColor Gray
     Write-Host "  Start-Service $ServiceName" -ForegroundColor Gray
     Write-Host "  Stop-Service $ServiceName" -ForegroundColor Gray

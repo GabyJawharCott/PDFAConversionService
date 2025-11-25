@@ -132,6 +132,8 @@ Invoke-Command -ComputerName $ServerName -ScriptBlock {
         sc.exe config $name binPath= "`"$exePath`"" | Out-Null
         sc.exe config $name obj= $account | Out-Null
         sc.exe config $name start= auto | Out-Null
+        # Configure failure recovery: auto-restart on failure
+        sc.exe failure $name reset= 86400 actions= restart/60000/restart/60000/restart/60000 | Out-Null
         Write-Host "✓ Service updated" -ForegroundColor Green
     } else {
         # Create new service
@@ -139,6 +141,8 @@ Invoke-Command -ComputerName $ServerName -ScriptBlock {
         sc.exe config $name obj= $account | Out-Null
         sc.exe config $name DisplayName= "PDFA Conversion Service" | Out-Null
         sc.exe description $name "Converts PDF files to PDF/A-1b format using Ghostscript" | Out-Null
+        # Configure failure recovery: auto-restart on failure
+        sc.exe failure $name reset= 86400 actions= restart/60000/restart/60000/restart/60000 | Out-Null
         Write-Host "✓ Service created" -ForegroundColor Green
     }
 } -ArgumentList $serviceName, "$ServicePath\PDFAConversionService.exe", $ServiceAccount

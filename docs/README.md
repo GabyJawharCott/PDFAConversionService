@@ -18,6 +18,7 @@ This folder contains all documentation for the PDFA Conversion Service.
 
 - **[SECURITY_LOCALHOST.md](./SECURITY_LOCALHOST.md)** - Security considerations for localhost deployment
 - **[TEMP_DIRECTORY_ANALYSIS.md](./TEMP_DIRECTORY_ANALYSIS.md)** - Analysis of temporary directory options
+- **[SERVICE_AUTO_START.md](./SERVICE_AUTO_START.md)** - Service auto-start and auto-restart configuration
 - **[VERSION.md](./VERSION.md)** - Version history and changelog
 
 ## 🚀 Quick Links
