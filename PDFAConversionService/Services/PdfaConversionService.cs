@@ -95,7 +95,7 @@ namespace PDFAConversionService.Services
             }
 
             // Adding input and output paths (ensure space before output file parameter)
-            GSArgs = GSArgs.TrimEnd() + " " + $"-sOutputFile=\"{outputPath}\" \"{inputPath}\"";
+            GSArgs = GSArgs.TrimEnd() + $" -sOutputFile=\"{outputPath}\" \"{inputPath}\"";
 
             _logger.LogInformation("Executing Ghostscript with timeout: {TimeoutSeconds} seconds", _timeoutInSeconds);
 
