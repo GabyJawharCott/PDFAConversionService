@@ -67,7 +67,7 @@ namespace PDFAConversionService.Controllers
                 return StatusCode(504, new PdfaConversionResponse
                 {
                     Success = false,
-                    ErrorMessage = "Conversion timed out. The PDF may be too large or complex. Please try again or contact support."
+                    ErrorMessage = "Conversion timed out. The PDF may be too large, complex or wrong settings has been set. Please try again or contact support."
                 });
             }
             catch (InvalidOperationException ex)
