@@ -16,7 +16,7 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-  solution: '**/*.slnx'
+  solution: 'PDFAConversionService.sln'
   projectPath: 'PDFAConversionService/PDFAConversionService.csproj'
   testProjectPath: 'PDFAConversionService.Tests/PDFAConversionService.Tests.csproj'
 

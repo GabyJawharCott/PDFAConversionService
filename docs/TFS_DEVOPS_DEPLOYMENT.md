@@ -49,7 +49,7 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-  solution: '**/*.slnx'
+  solution: 'PDFAConversionService.sln'
   projectPath: 'PDFAConversionService/PDFAConversionService.csproj'
   testProjectPath: 'PDFAConversionService.Tests/PDFAConversionService.Tests.csproj'
 
@@ -128,11 +128,11 @@ stages:
 
    **Task 2: Restore**
    - Task: `NuGet restore` or `dotnet restore`
-   - Path to solution: `**/*.slnx`
+   - Path to solution: `PDFAConversionService.sln`
 
    **Task 3: Build**
    - Task: `Build solution` or `dotnet build`
-   - Path to solution: `**/*.slnx`
+   - Path to solution: `PDFAConversionService.sln`
    - Configuration: `Release`
    - Arguments: `--no-restore`
 
