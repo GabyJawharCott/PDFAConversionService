@@ -2,8 +2,8 @@
 # Run this script to install the PDFA Conversion Service as a Windows Service
 #
 # Usage:
-#   .\Install-Service.ps1 -ServicePath "C:\Services\PDFAConversionService"
-#   .\Install-Service.ps1 -ServicePath "C:\Services\PDFAConversionService" -ServiceAccount "DOMAIN\ServiceAccount"
+#   .\Install-Service.ps1 -ServicePath "C:\Program Files\CottSystems\PDFAConversionService"
+#   .\Install-Service.ps1 -ServicePath "C:\Program Files\CottSystems\PDFAConversionService" -ServiceAccount "DOMAIN\ServiceAccount"
 #
 # Alternative: You can also use the built-in command-line installer:
 #   PDFAConversionService.exe install
@@ -21,7 +21,7 @@ param(
     [string]$ServicePath,
     
     [Parameter(Mandatory=$false, HelpMessage="Windows Service name")]
-    [string]$ServiceName = "PDFAConversionService",
+    [string]$ServiceName = "Cott.PDFAConversion.Service",
     
     [Parameter(Mandatory=$false, HelpMessage="Service account to run the service (e.g., 'NT AUTHORITY\NETWORK SERVICE' or 'DOMAIN\ServiceAccount')")]
     [string]$ServiceAccount = "NT AUTHORITY\NETWORK SERVICE",

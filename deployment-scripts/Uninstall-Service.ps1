@@ -3,7 +3,7 @@
 #
 # Usage:
 #   .\Uninstall-Service.ps1
-#   .\Uninstall-Service.ps1 -ServiceName "PDFAConversionService"
+#   .\Uninstall-Service.ps1 -ServiceName "Cott.PDFAConversion.Service"
 #   .\Uninstall-Service.ps1 -Force  # Skip confirmation
 #
 # Alternative: You can also use the built-in command-line uninstaller:
@@ -12,7 +12,7 @@
 [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='High')]
 param(
     [Parameter(Mandatory=$false, HelpMessage="Windows Service name to uninstall")]
-    [string]$ServiceName = "PDFAConversionService",
+    [string]$ServiceName = "Cott.PDFAConversion.Service",
     
     [Parameter(Mandatory=$false, HelpMessage="Skip confirmation prompt")]
     [switch]$Force
