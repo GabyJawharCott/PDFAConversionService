@@ -3,7 +3,7 @@
 
 param(
     [Parameter(Mandatory=$false)]
-    [string]$ServicePath = "C:\Services\PDFAConversionService",
+    [string]$ServicePath = "C:\Program Files\CottSystems\PDFAConversionService",
     
     [Parameter(Mandatory=$false)]
     [string]$TempDirectory = "C:\Temp\PdfaConversion",
