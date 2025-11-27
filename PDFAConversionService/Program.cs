@@ -9,12 +9,17 @@ using PDFAConversionService.Models;
 using PDFAConversionService.Services;
 using PDFAConversionService.Validators;
 
+//TODO: Refactor this file, Move some code especially the ones related to the Builder to functions if possible
+
+string serviceName = "Cott.PDFAConversion.Service";
+
 AppDomain.CurrentDomain.UnhandledException += (s, e) =>
 {
     Console.Error.WriteLine("UNHANDLED: " + e.ExceptionObject);
 };
 
-    // Handle command-line arguments for service management
+
+// Handle command-line arguments for service management
 if (args.Length > 0)
 {
     var command = args[0].ToLowerInvariant();
@@ -74,7 +79,7 @@ var builder = WebApplication.CreateBuilder(args);
 if (Environment.UserInteractive)
     builder.Host.UseConsoleLifetime();
 else
-    builder.Host.UseWindowsService(o => o.ServiceName = "PDFAConversionService");
+    builder.Host.UseWindowsService(o => o.ServiceName = serviceName);
 
 // Logging
 builder.Logging.ClearProviders();
@@ -86,7 +91,7 @@ builder.Logging.AddSimpleConsole(o =>
 });
 if (OperatingSystem.IsWindows())
 {
-    builder.Logging.AddEventLog(new EventLogSettings { SourceName = "PDFAConversionService" });
+    builder.Logging.AddEventLog(new EventLogSettings { SourceName = serviceName });
 }
 
 // Register services including command executor
@@ -167,6 +172,7 @@ builder.WebHost.UseKestrel(options =>
 });
 
 // Helper method to configure HTTPS
+#region Configuration Helpers
 static void ConfigureHttps(
     Microsoft.AspNetCore.Server.Kestrel.Core.ListenOptions listenOptions,
     Microsoft.Extensions.Configuration.IConfigurationSection httpsConfig,
@@ -265,6 +271,8 @@ static void ConfigureStoreCertificate(
         store.Close();
     }
 }
+
+#endregion
 
 static System.Security.Cryptography.X509Certificates.X509Certificate2? FindCertificate(
     System.Security.Cryptography.X509Certificates.X509Store store,

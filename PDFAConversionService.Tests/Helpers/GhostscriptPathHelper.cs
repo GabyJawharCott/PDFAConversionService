@@ -23,8 +23,8 @@ namespace PDFAConversionService.Tests.Helpers
                 var builder = new ConfigurationBuilder()
                     .SetBasePath(basePath)
                     .AddJsonFile("appsettings.json", optional: true)
-                    .AddJsonFile(Path.Combine(basePath, "..", "..", "..", "..", "PDFAConversionService", "appsettings.json"), optional: true)
-                    .AddJsonFile(Path.Combine(basePath, "..", "..", "PDFAConversionService", "appsettings.json"), optional: true)
+                    .AddJsonFile(Path.Combine(basePath, "..", "..", "..", "..", "Cott.PDFAConversion.Service", "appsettings.json"), optional: true)
+                    .AddJsonFile(Path.Combine(basePath, "..", "..", "Cott.PDFAConversion.Service", "appsettings.json"), optional: true)
                     .AddEnvironmentVariables();
 
                 configuration = builder.Build();
