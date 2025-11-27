@@ -362,7 +362,7 @@ For issues, questions, or contributions, please open an issue in the repository.
 
 ## Version History
 
-- **1.0.0** - Initial release with core conversion functionality
+- **1.0.0.0** - Initial release with core conversion functionality
   - PDF to PDF/A-1b conversion
   - RESTful API
   - Windows Service support

@@ -1,6 +1,6 @@
 # Version History
 
-## 1.0.0 (2024-11-25)
+## 1.0.0.0 (2024-11-25)
 
 ### Initial Release
 - PDF to PDF/A-1b conversion functionality
