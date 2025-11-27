@@ -1,7 +1,8 @@
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.Json;
-using Microsoft.Extensions.Configuration.EnvironmentVariables;
 using PDFAConversionService.Services;
+using System;
+using System.IO;
+using System.Linq;
 
 namespace PDFAConversionService.Tests.Helpers
 {
@@ -29,9 +30,26 @@ namespace PDFAConversionService.Tests.Helpers
                 configuration = builder.Build();
             }
 
-            // Get configured path or use default
+            // Try discovery via 'where' command first to prefer installed version over configuration
+            var executor = new CommandExecutorService();
+            var (exitCode, output) = executor.RunCommand("where", "gswin64c.exe");
+
+            if (exitCode == 0)
+            {
+                var first = output
+                    .Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(p => p.Trim())
+                    .FirstOrDefault(File.Exists);
+
+                if (!string.IsNullOrWhiteSpace(first))
+                {
+                    return first!;
+                }
+            }
+
+            // Get configured path or use default (if discovery failed)
             var configuredPath = configuration["Ghostscript:ExecutablePath"];
-            string ghostscriptPath = configuredPath ?? @"C:\Program Files\gs\gs10.06.0\bin\gswin64c.exe";
+            var ghostscriptPath = configuredPath ?? @"C:\Program Files\gs\gs10.06.0\bin\gswin64c.exe";
 
             // If configured path exists, use it
             if (!string.IsNullOrWhiteSpace(configuredPath) && File.Exists(ghostscriptPath))
@@ -48,22 +66,6 @@ namespace PDFAConversionService.Tests.Helpers
             if (File.Exists(ghostscriptPath))
             {
                 return ghostscriptPath;
-            }
-
-            // Try discovery via 'where' command (same as Program.cs)
-            var executor = new CommandExecutorService();
-            var (exitCode, output) = executor.RunCommand("where", "gswin64c.exe");
-            
-            if (exitCode == 0)
-            {
-                var first = output
-                    .Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries)
-                    .FirstOrDefault(p => File.Exists(p.Trim()));
-                
-                if (first != null)
-                {
-                    return first.Trim();
-                }
             }
 
             // Fall back to configured path or default
